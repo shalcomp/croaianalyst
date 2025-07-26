@@ -1,13 +1,13 @@
 
 import React, { useState, useCallback } from 'react';
-import { Header } from './components/Header.tsx';
-import { InputForm } from './components/InputForm.tsx';
-import { ResultsDisplay } from './components/ResultsDisplay.tsx';
-import { Loader } from './components/Loader.tsx';
-import { AdGenerator } from './components/AdGenerator.tsx';
+import { Header } from './components/Header';
+import { InputForm } from './components/InputForm';
+import { ResultsDisplay } from './components/ResultsDisplay';
+import { Loader } from './components/Loader';
+import { AdGenerator } from './components/AdGenerator';
 import { analyzeWebsite, generateAdCopy } from './services/geminiService';
 import type { AnalysisResult, GeneratedAds, UserInput } from './types';
-import { CheckCircleIcon, ExclamationTriangleIcon } from './components/Icon.tsx';
+import { CheckCircleIcon, ExclamationTriangleIcon } from './components/Icon';
 
 export type AnalysisType = 'PPC' | 'ORGANIC';
 
