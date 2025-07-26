@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { GoogleGenAI } from "@google/genai";
 import { verifyToken, AuthRequest } from '../middleware/auth';
-import type { UserInput, AnalysisResult, GeneratedAds } from '../../src/types';
+import type { UserInput, AnalysisResult, GeneratedAds, AnalysisType } from '../../src/types';
 import { 
     GEMINI_MODEL, 
     ANALYSIS_SYSTEM_INSTRUCTION, 
@@ -12,7 +12,6 @@ import {
     ADS_RESPONSE_SCHEMA,
 } from "../constants";
 import { pool } from '../db';
-import type { AnalysisType } from '../../src/pages/DashboardPage';
 
 const router = Router();
 

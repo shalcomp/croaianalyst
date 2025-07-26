@@ -4,6 +4,7 @@ import DashboardPage from './pages/DashboardPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import HistoryPage from './pages/HistoryPage';
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,14 @@ const App: React.FC = () => {
         element={
           <ProtectedRoute>
             <DashboardPage />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/history" 
+        element={
+          <ProtectedRoute>
+            <HistoryPage />
           </ProtectedRoute>
         } 
       />

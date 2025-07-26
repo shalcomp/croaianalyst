@@ -1,5 +1,4 @@
-import type { UserInput, AnalysisResult, GeneratedAds } from '../types';
-import type { AnalysisType } from '../pages/DashboardPage';
+import type { UserInput, AnalysisResult, GeneratedAds, AnalysisHistoryItem, AnalysisType } from '../types';
 
 const getAuthToken = () => localStorage.getItem('token');
 
@@ -52,6 +51,16 @@ export const generateAdCopy = async (url: string): Promise<GeneratedAds> => {
             'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({ url }),
+    });
+    return handleResponse(response);
+}
+
+export const getHistory = async (): Promise<AnalysisHistoryItem[]> => {
+    const token = getAuthToken();
+    const response = await fetch('/api/history', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
     });
     return handleResponse(response);
 }

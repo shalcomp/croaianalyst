@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-export type AuthRequest = Request & {
+export interface AuthRequest extends Request {
   user?: { id: number };
-};
+}
 
 export const verifyToken = (req: AuthRequest, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(' ')[1]; // Bearer <token>

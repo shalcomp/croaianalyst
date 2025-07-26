@@ -5,10 +5,8 @@ import { ResultsDisplay } from '../components/ResultsDisplay';
 import { Loader } from '../components/Loader';
 import { AdGenerator } from '../components/AdGenerator';
 import { analyzeWebsite, generateAdCopy } from '../services/apiService';
-import type { AnalysisResult, GeneratedAds, UserInput } from '../types';
+import type { AnalysisResult, GeneratedAds, UserInput, AnalysisType } from '../types';
 import { CheckCircleIcon, ExclamationTriangleIcon } from '../components/Icon';
-
-export type AnalysisType = 'PPC' | 'ORGANIC';
 
 const DashboardPage: React.FC = () => {
   const [userInput, setUserInput] = useState<UserInput>({
