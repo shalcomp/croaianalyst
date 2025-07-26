@@ -67,20 +67,20 @@ const App: React.FC = () => {
 
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-200 font-sans">
+    <div className="min-h-screen text-slate-200 font-sans">
       <Header />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="text-center mb-12 animate-fade-in">
-            <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
-                Don't <span className="text-red-500">lose</span> valuable customers
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        <div className="text-center mb-16 animate-fade-in-up">
+            <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl">
+                Unlock Your <span className="bg-gradient-to-r from-cyan-400 to-sky-500 bg-clip-text text-transparent">Conversion</span> Potential
             </h1>
-            <p className="mt-4 max-w-3xl mx-auto text-xl text-slate-300">
-                Check if your website is chasing away customers and get more value for your PPC efforts.
+            <p className="mt-6 max-w-3xl mx-auto text-xl text-slate-300">
+                Our AI analyzes your landing pages and ad copy to find what's chasing customers away. Stop guessing, start converting.
             </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-8 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
             <InputForm 
               userInput={userInput}
               setUserInput={setUserInput}
@@ -89,7 +89,7 @@ const App: React.FC = () => {
               analysisType={analysisType}
               setAnalysisType={setAnalysisType}
             />
-             {analysisResult && (
+             {analysisResult && !isLoading && (
                <AdGenerator 
                 onGenerate={handleGenerateAds}
                 generatedAds={generatedAds}
@@ -100,13 +100,13 @@ const App: React.FC = () => {
           <div className="lg:sticky lg:top-24">
             {isLoading && <Loader text="AI is analyzing the page... this may take a moment." />}
             {error && (
-              <div className="bg-red-900/50 border border-red-700 text-red-300 px-4 py-3 rounded-lg flex items-center gap-3">
+              <div className="bg-red-900/50 border border-red-700 text-red-300 px-4 py-3 rounded-lg flex items-center gap-3 animate-fade-in">
                 <ExclamationTriangleIcon className="h-6 w-6" />
                 <span>{error}</span>
               </div>
             )}
             {!isLoading && !analysisResult && !error && (
-                 <div className="bg-slate-800/60 border border-slate-700 rounded-lg p-8 text-center">
+                 <div className="bg-slate-800/60 border border-slate-700 rounded-lg p-8 text-center animate-fade-in">
                     <CheckCircleIcon className="mx-auto h-12 w-12 text-cyan-400" />
                     <h2 className="mt-4 text-xl font-bold text-white">Ready for Analysis</h2>
                     <p className="mt-2 text-slate-400">
