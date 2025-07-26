@@ -17,5 +17,5 @@
     "jsx": "react-jsx"
   },
   "include": ["."],
-  "exclude": ["node_modules", "dist", "vite.config.ts", "Dockerfile", "nginx.conf"]
+  "exclude": ["node_modules", "dist", "Dockerfile", "nginx.conf"]
 }
