@@ -5,10 +5,9 @@ import { InputForm } from './components/InputForm';
 import { ResultsDisplay } from './components/ResultsDisplay';
 import { Loader } from './components/Loader';
 import { AdGenerator } from './components/AdGenerator';
-import { WelcomeState } from './components/WelcomeState';
 import { analyzeWebsite, generateAdCopy } from './services/geminiService';
 import type { AnalysisResult, GeneratedAds, UserInput } from './types';
-import { ExclamationTriangleIcon } from './components/Icon';
+import { CheckCircleIcon, ExclamationTriangleIcon } from './components/Icon';
 
 export type AnalysisType = 'PPC' | 'ORGANIC';
 
@@ -68,22 +67,20 @@ const App: React.FC = () => {
 
 
   return (
-    <div className="min-h-screen font-sans">
+    <div className="min-h-screen bg-slate-900 text-slate-200 font-sans">
       <Header />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        <div className="text-center mb-16 animate-fade-in-up">
-            <h1 className="text-4xl font-extrabold tracking-tighter text-white sm:text-5xl lg:text-6xl">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Don't let customers</span>
-                <br/>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-rose-500">slip away</span>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="text-center mb-12 animate-fade-in">
+            <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+                Don't <span className="text-red-500">lose</span> valuable customers
             </h1>
-            <p className="mt-4 max-w-3xl mx-auto text-lg text-slate-400">
-                Instantly check if your website is optimized for conversions and get more value from your traffic.
+            <p className="mt-4 max-w-3xl mx-auto text-xl text-slate-300">
+                Check if your website is chasing away customers and get more value for your PPC efforts.
             </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-          <div className="lg:col-span-2 flex flex-col gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          <div className="flex flex-col gap-8">
             <InputForm 
               userInput={userInput}
               setUserInput={setUserInput}
@@ -92,25 +89,31 @@ const App: React.FC = () => {
               analysisType={analysisType}
               setAnalysisType={setAnalysisType}
             />
-             {analysisResult && !isLoading && (
-               <div className="animate-fade-in-up" style={{animationDelay: '200ms'}}>
-                 <AdGenerator 
-                  onGenerate={handleGenerateAds}
-                  generatedAds={generatedAds}
-                  isLoading={isGeneratingAds}
-                  />
-               </div>
+             {analysisResult && (
+               <AdGenerator 
+                onGenerate={handleGenerateAds}
+                generatedAds={generatedAds}
+                isLoading={isGeneratingAds}
+                />
              )}
           </div>
-          <div className="lg:col-span-3 lg:sticky lg:top-24">
+          <div className="lg:sticky lg:top-24">
             {isLoading && <Loader text="AI is analyzing the page... this may take a moment." />}
             {error && (
-              <div className="bg-rose-500/10 border border-rose-500/30 text-rose-300 px-4 py-3 rounded-lg flex items-center gap-3 animate-fade-in-up">
+              <div className="bg-red-900/50 border border-red-700 text-red-300 px-4 py-3 rounded-lg flex items-center gap-3">
                 <ExclamationTriangleIcon className="h-6 w-6" />
                 <span>{error}</span>
               </div>
             )}
-            {!isLoading && !analysisResult && !error && <WelcomeState />}
+            {!isLoading && !analysisResult && !error && (
+                 <div className="bg-slate-800/60 border border-slate-700 rounded-lg p-8 text-center">
+                    <CheckCircleIcon className="mx-auto h-12 w-12 text-cyan-400" />
+                    <h2 className="mt-4 text-xl font-bold text-white">Ready for Analysis</h2>
+                    <p className="mt-2 text-slate-400">
+                        Select an analysis type and enter a website URL to begin. The AI will provide a complete conversion optimization analysis.
+                    </p>
+                </div>
+            )}
             {analysisResult && <ResultsDisplay result={analysisResult} />}
           </div>
         </div>
