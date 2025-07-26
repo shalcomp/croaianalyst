@@ -1,17 +1,16 @@
-
 import React, { useState, useCallback } from 'react';
-import { Header } from './components/Header.tsx';
-import { InputForm } from './components/InputForm.tsx';
-import { ResultsDisplay } from './components/ResultsDisplay.tsx';
-import { Loader } from './components/Loader.tsx';
-import { AdGenerator } from './components/AdGenerator.tsx';
-import { analyzeWebsite, generateAdCopy } from './services/geminiService';
-import type { AnalysisResult, GeneratedAds, UserInput } from './types';
-import { CheckCircleIcon, ExclamationTriangleIcon } from './components/Icon.tsx';
+import { Header } from '../components/Header';
+import { InputForm } from '../components/InputForm';
+import { ResultsDisplay } from '../components/ResultsDisplay';
+import { Loader } from '../components/Loader';
+import { AdGenerator } from '../components/AdGenerator';
+import { analyzeWebsite, generateAdCopy } from '../services/apiService';
+import type { AnalysisResult, GeneratedAds, UserInput } from '../types';
+import { CheckCircleIcon, ExclamationTriangleIcon } from '../components/Icon';
 
 export type AnalysisType = 'PPC' | 'ORGANIC';
 
-const App: React.FC = () => {
+const DashboardPage: React.FC = () => {
   const [userInput, setUserInput] = useState<UserInput>({
     url: '',
     keywords: '',
@@ -38,9 +37,9 @@ const App: React.FC = () => {
     try {
       const result = await analyzeWebsite(userInput, analysisType);
       setAnalysisResult(result);
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
-      setError('Failed to analyze the website. The AI may be busy or the URL might be inaccessible. Please try again.');
+      setError(e.message || 'Failed to analyze the website. The AI may be busy or the URL might be inaccessible. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -57,9 +56,9 @@ const App: React.FC = () => {
     try {
         const ads = await generateAdCopy(userInput.url);
         setGeneratedAds(ads);
-    } catch (e) {
+    } catch (e: any) {
         console.error(e);
-        setError('Failed to generate ad copy. Please try again later.');
+        setError(e.message || 'Failed to generate ad copy. Please try again later.');
     } finally {
         setIsGeneratingAds(false);
     }
@@ -122,4 +121,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default DashboardPage;

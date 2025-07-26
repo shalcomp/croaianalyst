@@ -21,10 +21,10 @@ const TabButton: React.FC<{
   return (
     <button
       onClick={onClick}
-      className={`w-1/2 py-2.5 text-sm font-medium rounded-md transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-800 focus-visible:ring-cyan-500 ${
+      className={`w-1/2 py-2.5 text-sm font-semibold rounded-md transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-800 focus:ring-cyan-500 ${
         isActive
-          ? 'bg-cyan-500/20 text-cyan-300'
-          : 'text-slate-400 hover:bg-slate-700/50 hover:text-slate-200'
+          ? 'bg-cyan-600 text-white shadow'
+          : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
       }`}
     >
       {label}
@@ -36,6 +36,7 @@ const TabButton: React.FC<{
 export const InputForm: React.FC<InputFormProps> = ({ userInput, setUserInput, onAnalyze, isLoading, analysisType, setAnalysisType }) => {
   
   useEffect(() => {
+    // Clear PPC-specific fields when switching to Organic analysis
     if (analysisType === 'ORGANIC') {
         setUserInput(prev => ({ ...prev, keywords: '', headlines: '', descriptions: '' }));
     }
@@ -73,14 +74,14 @@ export const InputForm: React.FC<InputFormProps> = ({ userInput, setUserInput, o
 
       <div className="space-y-4">
         <div>
-          <label htmlFor="url" className="block text-sm font-medium text-slate-300 mb-1">Website URL*</label>
+          <label htmlFor="url" className="block text-sm font-medium text-slate-300">Website URL*</label>
           <input
             type="url"
             name="url"
             id="url"
             value={userInput.url}
             onChange={handleInputChange}
-            className="block w-full bg-slate-700/50 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm text-white p-2.5 border transition-colors focus:bg-slate-700"
+            className="mt-1 block w-full bg-slate-900/50 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm text-white p-2"
             placeholder="https://example.com/landing-page"
             required
           />
@@ -89,40 +90,40 @@ export const InputForm: React.FC<InputFormProps> = ({ userInput, setUserInput, o
         {analysisType === 'PPC' && (
           <>
             <div>
-              <label htmlFor="keywords" className="block text-sm font-medium text-slate-300 mb-1">Target Keywords</label>
+              <label htmlFor="keywords" className="block text-sm font-medium text-slate-300">Target Keywords</label>
               <input
                 type="text"
                 name="keywords"
                 id="keywords"
                 value={userInput.keywords}
                 onChange={handleInputChange}
-                className="block w-full bg-slate-700/50 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm text-white p-2.5 border transition-colors focus:bg-slate-700"
+                className="mt-1 block w-full bg-slate-900/50 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm text-white p-2"
                 placeholder="e.g., premium dog food, grain-free kibble"
               />
-              <p className="mt-1.5 text-xs text-slate-500">Comma-separated keywords your ad campaign is targeting.</p>
+              <p className="mt-1 text-xs text-slate-500">Comma-separated keywords your ad campaign is targeting.</p>
             </div>
             <div>
-              <label htmlFor="headlines" className="block text-sm font-medium text-slate-300 mb-1">Ad Headlines</label>
+              <label htmlFor="headlines" className="block text-sm font-medium text-slate-300">Ad Headlines</label>
               <textarea
                 name="headlines"
                 id="headlines"
                 rows={2}
                 value={userInput.headlines}
                 onChange={handleInputChange}
-                className="block w-full bg-slate-700/50 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm text-white p-2.5 border transition-colors focus:bg-slate-700"
+                className="mt-1 block w-full bg-slate-900/50 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm text-white p-2"
                 placeholder="e.g., Premium Dog Food | 50% Off Today"
               />
             </div>
             <div>
-              <label htmlFor="descriptions" className="block text-sm font-medium text-slate-300 mb-1">Ad Descriptions</label>
+              <label htmlFor="descriptions" className="block text-sm font-medium text-slate-300">Ad Descriptions</label>
               <textarea
                 name="descriptions"
                 id="descriptions"
                 rows={3}
                 value={userInput.descriptions}
                 onChange={handleInputChange}
-                className="block w-full bg-slate-700/50 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm text-white p-2.5 border transition-colors focus:bg-slate-700"
-                placeholder="e.g., Give your best friend the nutrition they deserve."
+                className="mt-1 block w-full bg-slate-900/50 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm text-white p-2"
+                placeholder="e.g., Give your best friend the nutrition they deserve. All-natural ingredients. Free shipping."
               />
             </div>
           </>
@@ -131,7 +132,7 @@ export const InputForm: React.FC<InputFormProps> = ({ userInput, setUserInput, o
       <button
         onClick={onAnalyze}
         disabled={isLoading || !userInput.url}
-        className="w-full flex items-center justify-center gap-2 px-4 py-3 border border-transparent text-base font-semibold rounded-md shadow-lg text-white bg-gradient-to-r from-cyan-600 to-sky-600 hover:from-cyan-500 hover:to-sky-500 disabled:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-cyan-500 transition-all transform hover:scale-[1.02]"
+        className="w-full flex items-center justify-center gap-2 px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-cyan-600 hover:bg-cyan-700 disabled:bg-slate-600 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-cyan-500 transition-all"
       >
         <SparklesIcon className="h-5 w-5"/>
         {isLoading ? 'Analyzing...' : 'Analyze Website'}
