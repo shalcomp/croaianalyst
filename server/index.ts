@@ -1,7 +1,9 @@
+
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { initDb } from './db';
 import authRoutes from './routes/auth';
 import apiRoutes from './routes/api';
@@ -10,6 +12,10 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3001;
+
+// ES Module-safe way to get __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Initialize Database
 initDb().catch(console.error);

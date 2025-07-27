@@ -1,4 +1,5 @@
-import { Router, Request, Response } from 'express';
+
+import express, { Router } from 'express';
 import { GoogleGenAI } from "@google/genai";
 import { verifyToken } from '../middleware/auth';
 import type { UserInput, AnalysisResult, GeneratedAds, AnalysisType } from '../../src/types';
@@ -55,7 +56,7 @@ const generateAdsPrompt = (url: string): string => {
 };
 
 
-router.post('/analyze', verifyToken, async (req: Request, res: Response) => {
+router.post('/analyze', verifyToken, async (req: express.Request, res: express.Response) => {
     const { userInput, analysisType } = req.body as { userInput: UserInput, analysisType: AnalysisType };
     const userId = req.user?.id;
 
@@ -82,8 +83,12 @@ router.post('/analyze', verifyToken, async (req: Request, res: Response) => {
             }
         });
 
-        const text = response.text.trim();
-        const result: AnalysisResult = JSON.parse(text);
+        const text = response.text;
+        if (!text) {
+             return res.status(500).json({ message: "AI returned an empty response. This might be due to content restrictions." });
+        }
+
+        const result: AnalysisResult = JSON.parse(text.trim());
 
         // Save analysis to database
         await pool.query(
@@ -93,13 +98,14 @@ router.post('/analyze', verifyToken, async (req: Request, res: Response) => {
 
         res.json(result);
 
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error in /api/analyze:", error);
-        res.status(500).json({ message: "Failed to analyze website due to an internal error." });
+        const message = error.message || "Failed to analyze website due to an internal error.";
+        res.status(500).json({ message });
     }
 });
 
-router.post('/ads', verifyToken, async (req: Request, res: Response) => {
+router.post('/ads', verifyToken, async (req: express.Request, res: express.Response) => {
     const { url } = req.body;
 
     if (!url) {
@@ -117,17 +123,22 @@ router.post('/ads', verifyToken, async (req: Request, res: Response) => {
             }
         });
 
-        const text = response.text.trim();
-        const result: GeneratedAds = JSON.parse(text);
+        const text = response.text;
+        if (!text) {
+            return res.status(500).json({ message: "Failed to generate ad copy due to an empty response from AI." });
+        }
+        
+        const result: GeneratedAds = JSON.parse(text.trim());
 
         res.json(result);
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error in /api/ads:", error);
-        res.status(500).json({ message: "Failed to generate ad copy due to an internal error." });
+        const message = error.message || "Failed to generate ad copy due to an internal error.";
+        res.status(500).json({ message });
     }
 });
 
-router.get('/history', verifyToken, async (req: Request, res: Response) => {
+router.get('/history', verifyToken, async (req: express.Request, res: express.Response) => {
     const userId = req.user?.id;
 
     if (!userId) {

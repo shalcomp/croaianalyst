@@ -1,4 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
+
+import express from 'express';
 import jwt from 'jsonwebtoken';
 
 declare global {
@@ -9,7 +10,7 @@ declare global {
   }
 }
 
-export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
+export const verifyToken = (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const token = req.headers.authorization?.split(' ')[1]; // Bearer <token>
 
   if (!token) {
