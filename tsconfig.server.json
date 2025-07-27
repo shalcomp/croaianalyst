@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
     "esModuleInterop": true,
-    "target": "ES6",
-    "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist/server",
     "baseUrl": ".",
@@ -14,5 +14,5 @@
     }
   },
   "include": ["server/**/*.ts"],
-  "exclude": ["node_modules", "../src", "dist"]
+  "exclude": ["node_modules", "src", "dist"]
 }

@@ -1,5 +1,5 @@
 
-import express from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'production') {
     const clientDistPath = path.join(__dirname, '../../dist');
     app.use(express.static(clientDistPath));
 
-    app.get('*', (req, res) => {
+    app.get('*', (req: Request, res: Response) => {
         res.sendFile(path.join(clientDistPath, 'index.html'));
     });
 }
