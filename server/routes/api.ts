@@ -1,8 +1,8 @@
 
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
 import { GoogleGenAI } from "@google/genai";
-import { verifyToken } from '../middleware/auth';
-import type { UserInput, AnalysisResult, GeneratedAds, AnalysisType } from '../../src/types';
+import { verifyToken } from '../middleware/auth.js';
+import type { UserInput, AnalysisResult, GeneratedAds, AnalysisType } from '../../src/types.js';
 import { 
     GEMINI_MODEL, 
     ANALYSIS_SYSTEM_INSTRUCTION, 
@@ -11,8 +11,8 @@ import {
     ORGANIC_ANALYSIS_RESPONSE_SCHEMA,
     ADS_SYSTEM_INSTRUCTION,
     ADS_RESPONSE_SCHEMA,
-} from "../constants";
-import { pool } from '../db';
+} from "../constants.js";
+import { pool } from '../db.js';
 
 const router = Router();
 
@@ -56,7 +56,7 @@ const generateAdsPrompt = (url: string): string => {
 };
 
 
-router.post('/analyze', verifyToken, async (req: Request, res: Response) => {
+router.post('/analyze', verifyToken, async (req, res) => {
     const { userInput, analysisType } = req.body as { userInput: UserInput, analysisType: AnalysisType };
     const userId = req.user?.id;
 
@@ -105,7 +105,7 @@ router.post('/analyze', verifyToken, async (req: Request, res: Response) => {
     }
 });
 
-router.post('/ads', verifyToken, async (req: Request, res: Response) => {
+router.post('/ads', verifyToken, async (req, res) => {
     const { url } = req.body;
 
     if (!url) {
@@ -138,7 +138,7 @@ router.post('/ads', verifyToken, async (req: Request, res: Response) => {
     }
 });
 
-router.get('/history', verifyToken, async (req: Request, res: Response) => {
+router.get('/history', verifyToken, async (req, res) => {
     const userId = req.user?.id;
 
     if (!userId) {

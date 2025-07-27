@@ -1,12 +1,12 @@
 
-import express, { Request, Response } from 'express';
+import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { initDb } from './db';
-import authRoutes from './routes/auth';
-import apiRoutes from './routes/api';
+import { initDb } from './db.js';
+import authRoutes from './routes/auth.js';
+import apiRoutes from './routes/api.js';
 
 dotenv.config();
 
@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'production') {
     const clientDistPath = path.join(__dirname, '../../dist');
     app.use(express.static(clientDistPath));
 
-    app.get('*', (req: Request, res: Response) => {
+    app.get('*', (req, res) => {
         res.sendFile(path.join(clientDistPath, 'index.html'));
     });
 }
